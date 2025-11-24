@@ -1,5 +1,6 @@
 # Speak_Smart
 Speak Smart is a tool that analyses and evaluates audio transcript of a self-introduction given by the user either in textual or uploaded file format. Speak Smart is unique since it uses real time LLM integration to evaluate user's response.
+Used LLM for semantic understanding of transcript to calculate metrics like clarity, enthusiasm, filler words, etc., which traditionally require multiple ML models.
 ## Metrics take into consideration :-
 ### Content & Structure 
 ```
