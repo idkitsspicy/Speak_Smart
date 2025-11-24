@@ -5,4 +5,5 @@ vaderSentiment
 regex
 requests
 numpy
+gunicorn
 flask
