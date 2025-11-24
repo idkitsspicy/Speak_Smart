@@ -1,0 +1,121 @@
+<html>
+<head>
+    <style>
+        body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: #f5f7fb;
+}
+
+center {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+h1 {
+    margin-top: 40px;
+    color: #222;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+textarea.a {
+    width: 80%;
+    height: 220px;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #bbb;
+    outline: none;
+    resize: none;
+    transition: 0.3s;
+    background: white;
+}
+
+textarea.a:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px #a8c8f0;
+}
+
+h3, h2 {
+    color: #333;
+}
+
+.b input[type="file"] {
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+}
+
+.c {
+    margin-top: 15px;
+}
+
+select {
+    width: 200px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #bbb;
+    outline: none;
+    cursor: pointer;
+    background: white;
+}
+
+.d {
+    margin-top: 25px;
+    padding: 12px 30px;
+    font-size: 18px;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.d:hover {
+    background: #3578c8;
+}
+
+    </style>
+</head>  
+<center>
+    <h1>Communication Skill Analyzer</h1>
+     <form method="POST" enctype="multipart/form-data">
+    <textarea class="a" placeholder="Paste your transcript here.." name="transcript">
+       
+    </textarea>
+    <h3> OR</h3>
+    <h2>
+        Upload Text File
+    </h2>
+    <div class="b">
+    <input type="file" name="File" >
+    </div>
+    <div class="c">
+        <h2>
+            Context
+        </h2>
+        <select>
+            <option>
+                Interview
+            </option>
+            <option>
+                Informal
+            </option>
+        </select>
+    </div>
+    <br>
+    <br>
+    <input type="submit" value="Get Score" class="d"></html>
+</form>
+    </center>
+</html>
+
