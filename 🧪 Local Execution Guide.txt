@@ -1,0 +1,154 @@
+﻿🧪 Local Execution Guide
+Transcript Communication Scoring Tool
+This document explains how to set up and run the application locally on your machine.
+________________
+
+
+
+
+1. Clone the Project
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
+
+
+________________
+
+
+2. Create Virtual Environment
+Windows:
+python -m venv venv
+venv\Scripts\activate
+
+
+Mac / Linux:
+python3 -m venv venv
+source venv/bin/activate
+
+
+________________
+
+
+3. Install Dependencies
+The repository includes requirements.txt
+Run:
+pip install -r requirements.txt
+
+
+________________
+
+
+4. Setup Environment Variables
+The application uses Gemini API.
+A GEMINI_API_KEY is required.
+Create a .env file in the project folder:
+GEMINI_API_KEY=your_key_here
+
+
+You can obtain this key from:
+ https://aistudio.google.com/
+________________
+
+
+5. Project Structure (Expected)
+project/
+│
+├── app.py                 # Flask web app
+├── scorer_gemini.py       # scoring logic (your pasted code)
+├── templates/
+│   ├── index.html
+│   ├── results.html
+├── requirements.txt
+├── .env
+└── LOCAL_SETUP_GUIDE.md
+
+
+________________
+
+
+6. Run the Application
+python app.py
+
+
+If successful, terminal will show:
+* Running on http://127.0.0.1:5000
+
+
+________________
+
+
+7. Using the Tool
+Open a browser, visit:
+http://localhost:5000
+
+
+You’ll see UI with:
+✔ Text box for transcript input
+✔ Option to upload text file
+✔ Button to score transcript
+Once submitted → output displays:
+________________
+
+
+8. Output Explanation
+Python Metrics Computed
+* Salutation score (0–5)
+
+* Key info coverage (0–30)
+
+* Flow sequencing score (0–5)
+
+* Speech rate score (0–10)
+
+* Filler word ratio
+
+Gemini Metrics Computed
+   * grammar_score (0–10)
+
+   * vocab_score (0–10)
+
+   * flow_quality (0–10)
+
+   * clarity_score (0–15)
+
+   * engagement_score (0–15)
+
+   * unique_point_score (0–5)
+
+   * strengths list
+
+   * improvements list
+
+Final Output
+Sample:
+{
+  "overall": 82.55,
+  "python_metrics": {
+    "salutation": 4,
+    "key_info": 22.5,
+    "flow": 4.75,
+    "speech_rate_score": 10,
+    "filler_word_rate": 0.02
+  },
+  "gemini_metrics": {
+    ...
+  }
+}
+
+
+
+
+9. Stopping the App
+Press:
+CTRL + C
+
+
+________________
+
+
+10. OPTIONAL: Run without Gemini (offline mode)
+If needed, comment out in score_transcript():
+ai = gemini_analysis(transcript, context)
+
+
+And provide dummy dictionary.
+________________
