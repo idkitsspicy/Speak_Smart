@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Transcript Analysis Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: "Poppins", sans-serif; background: #f5f7fb; padding: 40px; }
+        h1 { color: #222; margin-bottom: 30px; }
+        .score-box { background: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);}
+        h2 { color: #4a90e2; margin-bottom: 10px; }
+        h3 { color: #333; margin-bottom: 8px; }
+        ul { padding-left: 20px; margin-bottom: 10px; }
+        a { text-decoration: none; color: #4a90e2; font-weight: 500; }
+
+        #transcript-box { 
+            padding: 15px; 
+            background: #fff; 
+            border-radius: 8px; 
+            font-size: 17px; 
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .bad {
+            background: rgba(255, 0, 0, 0.35);
+            border-radius: 4px;
+            padding: 1px 3px;
+        }
+
+        .bar-bg {
+            width: 100%;
+            height: 12px;
+            background: #e5e5e5;
+            border-radius: 10px;
+            margin: 6px 0 14px 0;
+        }
+
+        .bar {
+            height: 12px;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Transcript Analysis Results</h1>
+
+    <h3>Transcript</h3>
+    <div id="transcript-box">{{ result.highlighted_transcript|safe }}</div><br><br>
+
+    <div class="score-box">
+        <h2>Overall Score: {{ result.get('overall', 0) }}</h2>
+
+        <h3>Content & Structure</h3>
+        Salutation: {{ result['python_metrics'].get('salutation', 0) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['python_metrics'].get('salutation', 0) }}"></div></div>
+
+        Key Information Covered: {{ result['python_metrics'].get('key_info', 0) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['python_metrics'].get('key_info', 0) }}"></div></div>
+
+        Flow/Order of Information: {{ result['python_metrics'].get('flow', 0) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['python_metrics'].get('flow', 0) }}"></div></div>
+
+        <h3>Delivery & Speech</h3>
+        Speech Rate: {{ result['python_metrics'].get('speech_rate_score', 0) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['python_metrics'].get('speech_rate_score', 0) }}"></div></div>
+
+        Filler Word Rate: {{ result['python_metrics'].get('filler_word_rate', 0)|round(2) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['python_metrics'].get('filler_word_rate', 0) }}"></div></div>
+    </div>
+
+    <div class="score-box">
+        <h3>Language & Clarity</h3>
+        Grammar: {{ result['gemini_metrics'].get('grammar_score', 0) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['gemini_metrics'].get('grammar_score', 0) }}"></div></div>
+
+        Vocabulary: {{ result['gemini_metrics'].get('vocab_score', 0) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['gemini_metrics'].get('vocab_score', 0) }}"></div></div>
+
+        Flow Quality: {{ result['gemini_metrics'].get('flow_quality', 0) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['gemini_metrics'].get('flow_quality', 0) }}"></div></div>
+
+        Clarity: {{ result['gemini_metrics'].get('clarity_score', 0) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['gemini_metrics'].get('clarity_score', 0) }}"></div></div>
+
+        <h3>Engagement & Uniqueness</h3>
+        Engagement: {{ result['gemini_metrics'].get('engagement_score', 0) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['gemini_metrics'].get('engagement_score', 0) }}"></div></div>
+
+        Unique Point Score: {{ result['gemini_metrics'].get('unique_point_score', 0) }}
+        <div class="bar-bg"><div class="bar" data-score="{{ result['gemini_metrics'].get('unique_point_score', 0) }}"></div></div>
+
+        <br>
+        Unique Point Explanation: {{ result['gemini_metrics'].get('unique_point_explanation', 'N/A') }}
+
+        <li>Strengths:
+            <ul>
+            {% for s in result['gemini_metrics'].get('strengths', []) %}
+                <li>{{ s }}</li>
+            {% else %}
+                <li>N/A</li>
+            {% endfor %}
+            </ul>
+        </li>
+        <li>Improvements:
+            <ul>
+            {% for i in result['gemini_metrics'].get('improvements', []) %}
+                <li>{{ i }}</li>
+            {% else %}
+                <li>N/A</li>
+            {% endfor %}
+            </ul>
+        </li>
+
+    </div>
+
+    <div class="score-box">
+        <h3>Transcript Length</h3>
+        <ul>
+            <li>Number of characters: {{ char_count }}</li>
+            <li>Number of words: {{ word_count }}</li>
+        </ul>
+    </div>
+
+    <a href="{{ url_for('index') }}">Go Back</a><br><br>
+
+    <script>
+    document.querySelectorAll('.bar').forEach(bar => {
+        let score = bar.getAttribute('data-score');
+        let percentage = Math.min(100, (score / 10) * 100);
+        bar.style.width = percentage + "%";
+
+        if(score <= 3) bar.style.background = "#ff4d4d";  
+        else if(score <= 7) bar.style.background = "#ffcc00";
+        else bar.style.background = "#4CAF50";
+    });
+    </script>
+
+</body>
+</html>
